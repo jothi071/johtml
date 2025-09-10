@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CloudFolio — Light & Airy Portfolio</title>
+<meta name="description" content="CloudFolio — light, pastel portfolio template with HTML, CSS & JS." />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#f7fbff;
+    --bg2:#eef7f6;
+    --card:#ffffffcc;
+    --muted:#667085;
+    --text:#0f1720;
+    --accent-start:#a3d9ff;
+    --accent-end:#cfeecf;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(16,24,40,0.06);
+    --speed:240ms;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%; margin:0; font-family:'Poppins',system-ui,Arial; -webkit-font-smoothing:antialiased}
+  body{
+    background: radial-gradient(800px 400px at 10% 10%, rgba(163,217,255,0.08), transparent 12%),
+                radial-gradient(800px 400px at 90% 90%, rgba(207,238,207,0.06), transparent 12%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:inherit}
+  button{font-family:inherit; cursor:pointer}
+
+  /* clouds layer */
+  .clouds{
+    position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden;
+  }
+  .cloud{
+    position:absolute; background:rgba(255,255,255,0.8); border-radius:40px; filter:blur(6px);
+    opacity:.9; transform: translate3d(0,0,0);
+    animation: drift linear infinite;
+  }
+  .c1{width:280px; height:80px; left:-10%; top:8%; animation-duration:40s;}
+  .c2{width:200px; height:60px; left:60%; top:6%; animation-duration:32s;}
+  .c3{width:340px; height:90px; left:20%; top:60%; animation-duration:48s;}
+  .c4{width:180px; height:50px; left:80%; top:50%; animation-duration:36s;}
+  @keyframes drift{ from{transform:translateX(-6vw)} to{transform:translateX(106vw)} }
+
+  /* header */
+  header{position:sticky; top:0; z-index:50; backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.5)); border-bottom:1px solid rgba(16,24,40,0.03)}
+  .wrap{max-width:1000px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:12px}
+  .brand{display:flex; gap:12px; align-items:center}
+  .logo{width:46px; height:46px; border-radius:10px; background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); display:grid; place-items:center; font-weight:700; color:#083; box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+  nav{margin-left:auto; display:flex; gap:8px; align-items:center}
+  .nav-btn{background:transparent; border:none; color:var(--muted); padding:8px 12px; border-radius:10px; transition:all var(--speed)}
+  .nav-btn:hover{color:var(--text); transform:translateY(-3px)}
+  .nav-btn.active{ color:var(--text); background:linear-gradient(90deg, rgba(163,217,255,0.18), rgba(207,238,207,0.12)); box-shadow:var(--shadow) }
+
+  /* main */
+  main{max-width:1000px; margin:28px auto; padding:0 20px 60px}
+  .panel{background:var(--card); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); border:1px solid rgba(16,24,40,0.03)}
+  h1{margin:0 0 8px; font-size:26px}
+  h2{margin:0 0 10px; color:var(--accent-start)}
+  p.lead{color:var(--muted); margin:10px 0 16px}
+
+  /* hero */
+  .hero{display:grid; gap:14px}
+  .hero-grid{display:grid; grid-template-columns:1fr 320px; gap:16px; align-items:center}
+  .cta-row{display:flex; gap:8px; margin-top:12px}
+  .btn{padding:10px 14px; border-radius:10px; border:none; font-weight:600; color:#042; background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); box-shadow:0 8px 22px rgba(0,0,0,0.06)}
+  .btn.ghost{background:transparent; border:1px dashed rgba(16,24,40,0.06); color:var(--muted)}
+
+  .accent-bar{height:6px; border-radius:8px; margin-top:14px; background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); box-shadow:0 8px 18px rgba(0,0,0,0.06)}
+
+  /* profile */
+  .profile{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center}
+  .avatar{width:120px; height:120px; border-radius:50%; overflow:hidden; display:grid; place-items:center; border:4px solid rgba(255,255,255,0.95); background:linear-gradient(180deg,#ffffff,#f0faf0)}
+  .avatar img{width:100%; height:100%; object-fit:cover}
+
+  /* about */
+  .about-grid{display:grid; grid-template-columns:320px 1fr; gap:18px; align-items:start}
+  .skills{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+  .skill{padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(16,24,40,0.03), transparent); color:var(--muted); font-weight:600; font-size:13px; border:1px solid rgba(16,24,40,0.03)}
+
+  /* projects */
+  .projects{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:12px}
+  .proj{padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.88)); border:1px solid rgba(16,24,40,0.03); transition:transform var(--speed), box-shadow var(--speed)}
+  .proj:hover{transform:translateY(-8px); box-shadow:0 18px 40px rgba(16,24,40,0.06)}
+  .proj-title{font-weight:700; margin:0 0 6px}
+  .proj-desc{color:var(--muted); font-size:14px}
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+  .tag{font-size:12px; padding:6px 8px; border-radius:999px; background:linear-gradient(90deg, rgba(16,24,40,0.03), transparent); color:var(--muted)}
+
+  /* contact */
+  .contact-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px}
+  .contact-card{display:flex; gap:12px; align-items:center; padding:12px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.9)); border:1px solid rgba(16,24,40,0.03); transition:transform var(--speed)}
+  .contact-card:hover{transform:translateY(-6px)}
+  .contact-icon{width:46px; height:46px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); color:#042; font-weight:700}
+
+  footer{max-width:1000px; margin:28px auto; padding:0 20px; color:var(--muted); display:flex; justify-content:space-between; align-items:center}
+
+  /* responsive */
+  @media (max-width:980px){
+    .hero-grid, .about-grid{grid-template-columns:1fr}
+    .projects{grid-template-columns:repeat(2,1fr)}
+    nav{display:none}
+  }
+  @media (max-width:640px){
+    .projects{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr}
+    .logo{width:38px;height:38px}
+  }
+
+  /* focus styles */
+  .nav-btn:focus, .btn:focus, .contact-card:focus { outline:3px solid rgba(163,217,255,0.18); outline-offset:4px; border-radius:8px }
+</style>
+</head>
+<body>
+  <!-- Floating cloud elements -->
+  <div class="clouds" aria-hidden="true">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
+  </div>
+
+  <header>
+    <div class="wrap" role="banner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">CF</div>
+        <div>
+          <div style="font-weight:600">CloudFolio</div>
+          <div style="font-size:12px; color:var(--muted)">Light & airy portfolio</div>
+        </div>
+      </div>
+
+      <nav role="navigation" aria-label="Primary">
+        <button class="nav-btn active" onclick="show('home')">Home</button>
+        <button class="nav-btn" onclick="show('about')">About</button>
+        <button class="nav-btn" onclick="show('projects')">Projects</button>
+        <button class="nav-btn" onclick="show('contact')">Contact</button>
+      </nav>
+
+      <div style="margin-left:12px">
+        <button class="nav-btn" onclick="downloadResume()" title="Download resume">📄 Resume</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" role="main" class="wrap">
+    <!-- JS injects content here -->
+  </main>
+
+  <footer>
+    <div>© 2025 CloudFolio • Built with HTML, CSS & JS</div>
+    <div style="color:var(--muted)">Designed with soft pastels</div>
+  </footer>
+
+<script>
+  // Nav active helper
+  function setActive(name){
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === name));
+  }
+
+  // Render sections
+  function show(section){
+    setActive(section);
+    const main = document.getElementById('main');
+
+    if(section === 'home'){
+      main.innerHTML = `
+        <section class="panel hero" aria-label="Home">
+          <div class="hero-grid">
+            <div>
+              <h1>Hello — I'm <strong>jothi mani</strong></h1>
+              <p class="lead">I design clean, calm web experiences. CloudFolio is a light, pastel portfolio template built to showcase projects and skills in a friendly, approachable way.</p>
+              <div class="cta-row">
+                <button class="btn" onclick="downloadResume()">Download Resume</button>
+                <button class="btn ghost" onclick="show('projects')">See Projects</button>
+              </div>
+              <div class="accent-bar" aria-hidden="true"></div>
+            </div>
+
+            <aside class="panel profile" aria-label="Profile">
+              <div class="avatar" role="img" aria-label="Profile image">
+                <img src="https://via.placeholder.com/320x320.png?text=Your+Photo" alt="Your profile picture">
+              </div>
+              <div style="font-weight:600">jothi mani</div>
+              <div style="color:var(--muted); font-size:13px">Frontend Developer • UI Enthusiast</div>
+            </aside>
+          </div>
+        </section>
+      `;
+    }
+    else if(section === 'about'){
+      main.innerHTML = `
+        <section class="panel" aria-label="About">
+          <h2>About Me</h2>
+          <p class="lead">I focus on calm, usable interfaces that make content easy to find. My work values accessibility, responsive layouts, and thoughtful motion.</p>
+
+          <div class="about-grid" style="margin-top:16px">
+            <div class="panel">
+              <h3 style="margin-top:0">Experience</h3>
+              <p style="color:var(--muted)">Built websites and small apps with attention to design details and cross-device reliability.</p>
+              <h3 style="margin-top:16px">Skills</h3>
+              <div class="skills">
+                <div class="skill">HTML5</div>
+                <div class="skill">CSS3</div>
+                <div class="skill">JavaScript</div>
+                <div class="skill">Responsive Design</div>
+                <div class="skill">Git</div>
+                <div class="skill">Accessibility</div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3 style="margin-top:0">Interests</h3>
+              <p style="color:var(--muted)">Design systems, motion that supports usability, and lightweight, maintainable code.</p>
+              <h3 style="margin-top:12px">Availability</h3>
+              <p style="color:var(--muted)">Open to internships, freelance projects, and full-time roles.</p>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+    else if(section === 'projects'){
+      main.innerHTML = `
+        <section class="panel" aria-label="Projects">
+          <h2>Projects</h2>
+          <p class="lead">A few select projects showcasing UI polish, responsive behavior, and simple interactions.</p>
+
+          <div class="projects" style="margin-top:12px">
+            <article class="proj" tabindex="0">
+              <div class="proj-title">CloudFolio Template</div>
+              <div class="proj-desc">Minimal pastel portfolio template with floating cloud accents and accessible controls.</div>
+              <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+            </article>
+
+            <article class="proj" tabindex="0">
+              <div class="proj-title">NoteNest</div>
+              <div class="proj-desc">Simple note app focused on keyboard-first interactions and clean UI.</div>
+              <div class="tags"><span class="tag">JS</span><span class="tag">LocalStorage</span></div>
+            </article>
+
+            <article class="proj" tabindex="0">
+              <div class="proj-title">SoftShop</div>
+              <div class="proj-desc">A lightweight e-commerce front-end with responsive layout and clear product cards.</div>
+              <div class="tags"><span class="tag">Responsive</span><span class="tag">UI</span></div>
+            </article>
+          </div>
+        </section>
+      `;
+    }
+    else if(section === 'contact'){
+      main.innerHTML = `
+        <section class="panel" aria-label="Contact">
+          <h2>Contact</h2>
+          <p class="lead">Have a question or want to collaborate? Reach out — I usually reply within a day.</p>
+
+          <div class="contact-grid">
+            <a class="contact-card" href="mailto:jokku2006@gmail.com">
+              <div class="contact-icon" aria-hidden="true">✉️</div>
+              <div>
+                <div style="font-weight:700">jokku2006@gmail.com</div>
+                <div style="color:var(--muted)">Email me</div>
+              </div>
+            </a>
+
+            <a class="contact-card" href="tel:+91 93636 02498">
+              <div class="contact-icon" aria-hidden="true">📞</div>
+              <div>
+                <div style="font-weight:700">+91 93636 02498</div>
+                <div style="color:var(--muted)">Call / WhatsApp</div>
+              </div>
+            </a>
+
+            <a class="contact-card" href="https://github.com/jothi071" target="_blank" rel="noopener">
+              <div class="contact-icon" aria-hidden="true">💻</div>
+              <div>
+                <div style="font-weight:700">github.com/jothi071</div>
+                <div style="color:var(--muted)">View code & projects</div>
+              </div>
+            </a>
+          </div>
+        </section>
+      `;
+    }
+
+    // smooth top on navigation
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Resume download placeholder
+  function downloadResume(){
+    const url = 'resume.pdf'; // replace with your resume file path
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'CloudFolio_Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  // keyboard shortcuts 1..4
+  document.addEventListener('keydown', e => {
+    if (e.key === '1') show('home');
+    if (e.key === '2') show('about');
+    if (e.key === '3') show('projects');
+    if (e.key === '4') show('contact');
+  });
+
+  // initialize
+  show('home');
+</script>
+</body>
+</html>
